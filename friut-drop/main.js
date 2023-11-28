@@ -40,7 +40,9 @@ const wallRight = Bodies.rectangle(windowWidth/ 1.6, windowHeight-277.4, windowW
 
 //데드라인
 const deadLine = Bodies.rectangle(windowWidth/2, windowHeight-400, windowWidth/4, 10,{
-    isStatic: true
+    isStatic: true,
+    isSensor: true,
+    render: { fillStyle: 'red' }
 });
 
 //게임판 생성
@@ -52,7 +54,7 @@ const nextFruit = ()=> {
     const index = Math.floor(Math.random() * 5);
     const fruit = FRUITS[index];
 
-    const body = Bodies.circle(windowWidth/2, 50, fruit.radius, {
+    const body = Bodies.circle(windowWidth/2, windowHeight/2, fruit.radius, {
         index: index,
         isSleeping: true,
         restitution: 0.2,
@@ -78,7 +80,14 @@ const render = Render.create({
 
 window.onmousemove = (event) => {
     if(currentBody.moveAble){
-        currentBody.position.x = event.offsetX
+
+        if(event.offsetX < windowWidth/2.7){
+            currentBody.position.x = windowWidth/2.7
+        }else if(event.offsetX > windowWidth/1.6){
+            currentBody.position.x = windowWidth/1.6
+        }else{
+            currentBody.position.x = event.offsetX
+        }
     }else{
 
     }
