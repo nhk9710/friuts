@@ -56,6 +56,7 @@ const nextFruit = ()=> {
         index: index,
         isSleeping: true,
         restitution: 0.2,
+        moveAble: true
     });
 
     currentBody = body;
@@ -76,12 +77,19 @@ const render = Render.create({
 });
 
 window.onmousemove = (event) => {
-    currentBody.position.x = event.offsetX
+    if(currentBody.moveAble){
+        currentBody.position.x = event.offsetX
+    }else{
+
+    }
 }
 
 render.canvas.addEventListener("click", (e) => {
     currentBody.isSleeping = false;
-    /*setInterval( () => {nextFruit()}, 1000);*/
+    currentBody.moveAble = false;
+
+
+    setTimeout( () => {nextFruit()}, 1000);
 }, false);
 
 Engine.run(engine);
